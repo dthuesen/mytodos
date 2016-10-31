@@ -1,3 +1,17 @@
+# this app is built with the Angular QuickStart Source
+
+So the readme text below is an artefact which I delete some day later.
+
+
+
+
+
+
+
+
+
+
+
 # Angular QuickStart Source
 [![Build Status][travis-badge]][travis-badge-url]
 

@@ -1,0 +1,14 @@
+{
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "files.autoSave": "afterDelay",
+  // Fügt Codeausschnitte ein, wenn ihr Präfix übereinstimmt. Funktioniert am besten, wenn "quickSuggestions" nicht aktiviert sind.
+  "editor.tabCompletion": true,
+  // Nachfolgendes automatisch eingefügtes Leerzeichen entfernen
+    "editor.trimAutoWhitespace": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/app/**/*.js": true,
+    "**/*.map": true
+  }
+}

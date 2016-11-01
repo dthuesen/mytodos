@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TodoService } from '../../services/todo.service';
 
 @Component({
     selector: 'todos',
@@ -6,7 +7,7 @@ import { Component } from '@angular/core';
       <div>
         <input type="text" 
                class="form-control" 
-               [(ngModel)]="newTodo" 
+               [(ngModel)]="_todoService.newTodo" 
                (keyup.enter)="addTodo()"
                placeholder="Write a todo and press enter" />
         <div *ngIf="errorMsg" 
@@ -33,35 +34,30 @@ import { Component } from '@angular/core';
       <button (click)="resetTodos()"
               class="btn btn-warning" >Reset todos</button>
       
-    `
+    `,
+    providers: [ TodoService ]
 })
 export class TodosComponent {
-  todos: any[];
-  newTodo: string;
+  todos: any;
   errorMsg: string;
   successMsg: string;
-  constructor() {
+  constructor(private _todoService: TodoService) {
     console.log('console.log from TodosComponent');
-    this.todos = ['Wash Dishes', 'Pickup Indre', 'Eat dinner'];
+    this.todos = _todoService.getTodos();
   }
 
   addTodo() {
-    if (!this.newTodo) {
-      // this.errorMsg = null;
+    if (!this._todoService.newTodo) {
       this.successMsg = null;
       console.log('You have entered nothing');
       this.errorMsg = 'You have entered nothing';
-    } else if (this.newTodo.length < 3) {
-      // this.errorMsg = null;
+    } else if (this._todoService.newTodo.length < 3) {
       this.successMsg = null;
       console.log('You have to enter more than 3 characters');
       this.errorMsg = 'You have to enter more than 3 characters';
     } else {
       this.errorMsg = null;
-      console.log('Adding a todo');
-      this.todos.push(this.newTodo);
-      console.log(this.todos);
-      this.newTodo = '';
+      this._todoService.addTodo(this._todoService.newTodo.trim());
       this.successMsg = 'Your new todo was added.';
       setTimeout(function() {
         this.successMsg = null;
@@ -70,14 +66,13 @@ export class TodosComponent {
   }
 
   removeTodo(todo: string) {
-    console.log('Removing todo' + todo);
-    this.todos.splice(this.todos.indexOf(todo), 1);
+    this._todoService.removeTodo(todo);
     this.successMsg = null;
     this.errorMsg = null;
   }
 
   resetTodos() {
-    this.todos = [];
+    this._todoService.resetTodos();
     this.successMsg = 'Todos cleared.';
   }
 }
